@@ -14,7 +14,7 @@ refs.countryList.innerHTML = '';
 Notify.init({
   width: '280px',
   position: 'center-top',
-  timeout: 2000,
+  timeout: 2500,
   plainText: true,
   borderRadius: '10px',
   cssAnimationStyle: 'zoom'
