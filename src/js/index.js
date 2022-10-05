@@ -11,6 +11,7 @@ const DEBOUNCE_DELAY = 300;
 refs.countryInfo.innerHTML = '';
 refs.countryList.innerHTML = '';
 
+
 Notify.init({
   width: '280px',
   position: 'center-top',
@@ -132,6 +133,19 @@ function createTargetCounrty(e) {
 
 
 
+=======
+  console.log(e.target.value);
+  API.fetchCountries(e.target.value).then(data => {
+    data.map(d => {
+      d.languages.map(lang => {
+        console.log(lang.name)
+      });
+    });
+    
+  });
+}
+
+>>>>>>> 52a7270c5380d27aeba3cf5681f5d6c38808e39b
 
 
 

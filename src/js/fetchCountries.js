@@ -1,6 +1,3 @@
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import {fetchCountries} from './fetchCountries';
-
 const BASE_URL = 'https://restcountries.com/v2'
 
 export function fetchCountries(name) {
@@ -13,4 +10,5 @@ export function fetchCountries(name) {
       return response.json();
     });
 }
+
 
