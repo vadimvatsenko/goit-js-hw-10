@@ -26,19 +26,18 @@ function searchFieldInput(e) {
   fetchCountries(e.target.value.trim()).then(data => {
         if (data.length > 10) {
           Notify.info("Too many matches found. Please enter a more specific name.");
-          refs.countryList.innerHTML = '';
-          refs.countryInfo.innerHTML = '';
+          clearMarkup();
 
+        } if (data.length >= 2 && data.length <= 10) {
+          createCountriesList(data);
 
-      } if (data.length >= 2 && data.length <= 10) {
-        createCountriesList(data);
-      } if (data.length === 1) {
+        } if (data.length === 1) {
         createTargetCountry(data);
-    };
+        };
 
   }).catch(error => {
     Notify.failure("Oops, there is no country with that name");
-    refs.countryList.innerHTML = '';
+    clearMarkup();
   });
 };
 
@@ -46,9 +45,9 @@ function createCountriesList(e) {
   
   const makeCountryList = e.map(({ flags, name }) => {
     
-    return `<li>
-      <img src="${flags.svg}" width = 100 alt = "flag of ${name}">
-      <p><b>Country: </b>${name}</p>
+    return `<li class = 'country-list__item'>
+      <img src="${flags.svg}" width = 50 alt = "flag of ${name.official}">
+      <p class ='country-list__name'>${name.official}</p>
       </li>`;
   }).join('');
   refs.countryList.innerHTML = makeCountryList;
@@ -58,23 +57,32 @@ function createCountriesList(e) {
 function createTargetCountry(e) {
   const makeCountryList = e.map(({ flags, name }) => {
     
-    return `<li>
-      <img src="${flags.svg}" width = 100 alt = "flag of ${name}">
-      <p><b>Country: </b>${name}</p>
+    return `<li class = 'country-list__item'>
+      <div class='img-wrap'>
+      <img src="${flags.svg}" width = 100 alt = "flag of ${name.official}">
+      </div>
+      <p class ='country-list__name country-list__name--big'>${name.official}</p>
       </li>`;
   }).join('');
+
   const makeTargetCounrty = e.map(({ capital, population, languages }) => {
-    const langCountry = languages.map(lang => lang.name);
+
+    const langCountry = Object.values(languages).join(', ');
 
     return `
-              <p><b>Population: </b>${population}</p>
-              <p><b>Capital: </b>${capital}</p>
-              <p><b>languages: </b>${langCountry}</p>
+              <p><b>Population: </b><span class ='country-info__item'>${population}</span></p>
+              <p><b>Capital: </b><span class ='country-info__item'>${capital}</span></p>
+              <p><b>Languages: </b><span class ='country-info__item'>${langCountry}</span></p>
           `;
   }).join('');
 
   refs.countryInfo.innerHTML = makeTargetCounrty;
   refs.countryList.innerHTML = makeCountryList;
+}
+
+function clearMarkup() {
+  refs.countryList.innerHTML = '';
+  refs.countryInfo.innerHTML = '';
 }
 
 
