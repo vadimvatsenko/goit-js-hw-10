@@ -11,7 +11,6 @@ const DEBOUNCE_DELAY = 300;
 refs.countryInfo.innerHTML = '';
 refs.countryList.innerHTML = '';
 
-
 Notify.init({
   width: '280px',
   position: 'center-top',
@@ -34,8 +33,9 @@ function searchFieldInput(e) {
       } if (data.length >= 2 && data.length <= 10) {
         createCountriesList(data);
       } if (data.length === 1) {
-      createTargetCounrty(data);
+        createTargetCountry(data);
     };
+
   }).catch(error => {
     Notify.failure("Oops, there is no country with that name");
     refs.countryList.innerHTML = '';
@@ -55,62 +55,28 @@ function createCountriesList(e) {
   refs.countryInfo.innerHTML = '';
 };
 
-function createTargetCounrty(e) {
-  const makeTargetCounrty = e.map(({ flags, name, capital, population, languages }) => {
+function createTargetCountry(e) {
+  const makeCountryList = e.map(({ flags, name }) => {
+    
+    return `<li>
+      <img src="${flags.svg}" width = 100 alt = "flag of ${name}">
+      <p><b>Country: </b>${name}</p>
+      </li>`;
+  }).join('');
+  const makeTargetCounrty = e.map(({ capital, population, languages }) => {
     const langCountry = languages.map(lang => lang.name);
+
     return `
-          <li>
-          <img src="${flags.svg}" width = 100 alt = "flag of ${name}">
-            <p><b>Country: </b>${name}</p>
-            <p><b>Population: </b>${population}</p>
-            <p><b>Capital: </b>${capital}</p>
-           <p><b>languages: </b>${langCountry}</p>
-          </li>
+              <p><b>Population: </b>${population}</p>
+              <p><b>Capital: </b>${capital}</p>
+              <p><b>languages: </b>${langCountry}</p>
           `;
   }).join('');
+
   refs.countryInfo.innerHTML = makeTargetCounrty;
-  refs.countryList.innerHTML = '';
+  refs.countryList.innerHTML = makeCountryList;
 }
 
-// function searchFieldInput(e) {
-  
-//   fetchCountries(e.target.value.trim()).then(data => {
-//     if (data.length > 10) {
-//           Notify.info("Too many matches found. Please enter a more specific name.")
-//         }
-//     const markup = data
-//       .map(({ flags, name, capital, population, languages }) => {
-//         const langCountry = languages.map((lang => lang.name))
-        
-//         if (data.length > 2 && data.length < 10) {
-//           return `
-//           <img src="${flags.svg}" width = 100 alt = "flag of ${name}">
-//             <p><b>Country: </b>${name}</p>
-//           `;
-
-//         } if (data.length === 1) {
-//            return `
-//           <li>
-//           <img src="${flags.svg}" width = 100 alt = "flag of ${name}">
-//             <p><b>Country: </b>${name}</p>
-//             <p><b>Population: </b>${population}</p>
-//             <p><b>Capital: </b>${capital}</p>
-//             <p><b>languages: </b>${langCountry}</p>
-//           </li>
-//           `;
-
-//         } 
-       
-//       }).join("");
-  
-//     refs.countryList.innerHTML = markup;
-    
-//   }).catch(error => {
-//     Notify.failure("Oops, there is no country with that name");
-//     refs.countryList.innerHTML = '';
-//   });
-
-// }
 
 
 
@@ -133,19 +99,7 @@ function createTargetCounrty(e) {
 
 
 
-=======
-  console.log(e.target.value);
-  API.fetchCountries(e.target.value).then(data => {
-    data.map(d => {
-      d.languages.map(lang => {
-        console.log(lang.name)
-      });
-    });
-    
-  });
-}
 
->>>>>>> 52a7270c5380d27aeba3cf5681f5d6c38808e39b
 
 
 
