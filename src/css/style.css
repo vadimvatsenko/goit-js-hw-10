@@ -10,6 +10,7 @@ body {
     background-color: #d1cfcf;
     color: #212121;
     line-height: 1.5;
+   
 }
 
 #search-box {
@@ -19,6 +20,8 @@ body {
     margin-bottom: 16px;
     border-radius: 10px;
     outline: none;
+    border: transparent;
+        box-shadow: 7px 0px 16px -7px rgba(122, 122, 122, 0.74);
 }
 
 li{
