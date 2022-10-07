@@ -3,8 +3,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import '../css/style.css';
 import { fetchCountries } from './fetchCountries';
 import { getRefs } from './getRefs';
-// import { createCountriesList, createTargetCountry } from './markup';
-// import { clearMarkup } from './clearMarkup';
+
 
 
 const refs = getRefs();
@@ -37,14 +36,17 @@ function searchFieldInput(e) {
       if (data.length > 10) {
         Notify.info("Too many matches found. Please enter a more specific name.");
         clearMarkup();
+       
         
         
       } if (data.length >= 2 && data.length <= 10) {
         createCountriesList(data);
+       
           
 
       } if (data.length === 1) {
         createTargetCountry(data);
+        
           
       }
 
@@ -54,6 +56,8 @@ function searchFieldInput(e) {
     });
   
 }
+
+
 
 function createCountriesList(e) {
   
