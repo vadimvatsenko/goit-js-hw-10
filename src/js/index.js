@@ -29,11 +29,11 @@ function searchFieldInput(e) {
  
   fetchCountries(e.target.value.trim()).then(data => {
      
-    if (e.target.value.trim() === '') {
-      clearMarkup();
-      return;
+      if (e.target.value.trim() === '') {
+        clearMarkup();
+        return;
      
-  }
+      }
       if (data.length > 10) {
         Notify.info("Too many matches found. Please enter a more specific name.");
         clearMarkup();
@@ -67,7 +67,7 @@ function createCountriesList(e) {
   refs.countryList.innerHTML = makeCountryList;
   refs.countryInfo.innerHTML = '';
 };
-// ===
+
 function createTargetCountry(e) {
   const makeCountryList = e.map(({ flags, name }) => {
     
