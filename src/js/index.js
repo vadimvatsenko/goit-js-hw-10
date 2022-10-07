@@ -1,8 +1,11 @@
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import '../css/style.css';
-import {fetchCountries} from './fetchCountries';
+import { fetchCountries } from './fetchCountries';
 import { getRefs } from './getRefs';
+// import { createCountriesList, createTargetCountry } from './markup';
+// import { clearMarkup } from './clearMarkup';
+
 
 const refs = getRefs();
 
@@ -23,23 +26,34 @@ Notify.init({
 refs.searchField.addEventListener('input', debounce(searchFieldInput, DEBOUNCE_DELAY));
 
 function searchFieldInput(e) {
+ 
   fetchCountries(e.target.value.trim()).then(data => {
-        if (data.length > 10) {
-          Notify.info("Too many matches found. Please enter a more specific name.");
-          clearMarkup();
+     
+    if (e.target.value.trim() === '') {
+      clearMarkup();
+      return;
+     
+  }
+      if (data.length > 10) {
+        Notify.info("Too many matches found. Please enter a more specific name.");
+        clearMarkup();
+        
+        
+      } if (data.length >= 2 && data.length <= 10) {
+        createCountriesList(data);
+          
 
-        } if (data.length >= 2 && data.length <= 10) {
-          createCountriesList(data);
-
-        } if (data.length === 1) {
+      } if (data.length === 1) {
         createTargetCountry(data);
-        };
+          
+      }
 
-  }).catch(error => {
-    Notify.failure("Oops, there is no country with that name");
-    clearMarkup();
-  });
-};
+    }).catch(error => {
+      Notify.failure("Oops, there is no country with that name");
+      clearMarkup();
+    });
+  
+}
 
 function createCountriesList(e) {
   
@@ -53,7 +67,7 @@ function createCountriesList(e) {
   refs.countryList.innerHTML = makeCountryList;
   refs.countryInfo.innerHTML = '';
 };
-
+// ===
 function createTargetCountry(e) {
   const makeCountryList = e.map(({ flags, name }) => {
     
