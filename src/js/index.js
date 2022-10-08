@@ -8,8 +8,8 @@ const refs = getRefs();
 
 const DEBOUNCE_DELAY = 300;
 
-// refs.countryInfo.innerHTML = '';
-// refs.countryList.innerHTML = '';
+refs.countryInfo.innerHTML = '';
+refs.countryList.innerHTML = '';
 
 Notify.init({
   width: '280px',
